@@ -61,6 +61,8 @@ namespace MiniMinecraft
 
             /*Load content for player*/
             player = new Player();
+            player.PlayerSetTexture(Content.Load<Texture2D>("Player"));
+            player.PlayerSetRectangle(new Rectangle(10, 100, 30, 50));
 
         }
 

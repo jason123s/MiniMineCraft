@@ -18,10 +18,7 @@ namespace MiniMinecraft
         Rectangle playerHolder;
         SpriteBatch spriteBatch;
 
-        public Player () {
-            this.playerTexture = Content.Load<Texture2D>("Player");
-            this.playerHolder = new Rectangle(10, 100, 30, 50);
-        }
+        public Player () {}
 
         public virtual void PlayerSetTexture(Texture2D texture) {
             this.playerTexture = texture;

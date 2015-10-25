@@ -16,6 +16,12 @@ namespace MiniMinecraft
     {
         int _playerPostion;
         public Texture2D _zombieTexture;
+        
+        private enum ZombieMind
+        {
+            CRAZY = 0,
+            SMART = 1
+        }
 
         public struct ZombieX
         {
@@ -39,6 +45,14 @@ namespace MiniMinecraft
             {
                 this._zombieHolder.X += num;
             }
+
+            private Enum _ZMind;
+
+            public Enum ZMind
+            {
+                get { return _ZMind; }
+                set { _ZMind = value; }
+            }
         }
 
         ZombieX[] crew = new ZombieX[10];
@@ -55,6 +69,14 @@ namespace MiniMinecraft
             {
                 crew[i]._zombieTexture = this._zombieTexture;
                 crew[i].ZombieHolder = new Rectangle((int)random.Next(0, 800), 338, 50, 50);
+                if (random.Next(0, 2) == 1)
+                {
+                    crew[i].ZMind = ZombieMind.SMART;
+                }
+                else
+                {
+                    crew[i].ZMind = ZombieMind.CRAZY;
+                }
             }
         }
 
@@ -75,15 +97,27 @@ namespace MiniMinecraft
             Random rand = new Random();
             for (int i = 0; i < 10; i++)
             {
-                if (crew[i].ZombieHolder.X < _playerPostion)
+                if (crew[i].ZombieHolder.X < _playerPostion && crew[i].ZMind.Equals(ZombieMind.SMART))
                 {
                     crew[i].UpdateZombiePosition(rand.Next(1,4));
                 }
-                else if (crew[i].ZombieHolder.X > _playerPostion)
+                else if (crew[i].ZombieHolder.X > _playerPostion && crew[i].ZMind.Equals(ZombieMind.SMART))
                 {
                     crew[i].UpdateZombiePosition(rand.Next(-4, -1));
                 }
-                else
+                else if (crew[i].ZMind.Equals(ZombieMind.CRAZY))
+                {
+                    int velocity = rand.Next(-4, 4);
+                    if (crew[i].ZombieHolder.X > 0 && crew[i].ZombieHolder.X < 800)
+                    {
+                        crew[i].UpdateZombiePosition(velocity);
+                    }
+                    else if (crew[i].ZombieHolder.X < 0)
+                    {
+                        //crew[i].ZombieHolder.X = 0;
+                    } 
+                }
+                else 
                 {
                     crew[i].UpdateZombiePosition(0);
                 }

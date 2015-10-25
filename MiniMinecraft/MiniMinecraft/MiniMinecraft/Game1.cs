@@ -21,6 +21,9 @@ namespace MiniMinecraft
 
         //Initialize the player object
         Player player;
+
+        //Initialize the zombie object
+        Zombie zombie;
         
         //Initialize the Dust Object and its values
         Dust dust;
@@ -30,6 +33,8 @@ namespace MiniMinecraft
 
         //screen values
         int screenHeight, screenWidth;
+
+
 
         public Game1()
         {
@@ -68,6 +73,10 @@ namespace MiniMinecraft
             player = new Player();
             player.PlayerSetTexture(Content.Load<Texture2D>("Player"));
             player.PlayerSetRectangle(new Rectangle(770, 338, 30, 50));
+
+            //Load content for Zombie
+            zombie = new Zombie(Content.Load<Texture2D>("Zombie"));
+            zombie.makeZombieCrew();
 
             //Load content for Dust
             dust = new Dust();
@@ -109,19 +118,11 @@ namespace MiniMinecraft
                 this.Exit();
 
             // TODO: Add your update logic here
+            player.Update(gameTime);
 
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
-            {
-                player.MoveLeft();
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.D))
-            {
-                player.MoveRight();
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Space))
-            {
-                player.PlayerJumpStraight();
-            }
+            //Update Movement for Zombie;
+            zombie.GetPlayerPosition(player.playerGetRectangle().X);
+            zombie.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -136,15 +137,9 @@ namespace MiniMinecraft
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            spriteBatch.Draw(player.playerGetTexture(), player.playerGetRectangle(), Color.White);
-            for (int i = 0; i < 81; i++)
-            {
-                spriteBatch.Draw(dust.getDustTexture(i), dust.getDustHolder(i), Color.White);
-            }
-
-            spriteBatch.Draw(dust.getDustTexture(10), new Rectangle(100,130,30,30), Color.White);
-            spriteBatch.Draw(dust.getDustTexture(10), new Rectangle(130, 130, 30, 30), Color.White);
-
+            player.Draw(spriteBatch);
+            dust.Draw(spriteBatch);
+            zombie.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);

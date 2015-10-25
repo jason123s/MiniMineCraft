@@ -78,6 +78,14 @@ namespace MiniMinecraft
             return dustList[position].DustHolder;
         }
 
+        public virtual void Draw(SpriteBatch spriteBatch)
+        {
+            for (int i = 0; i < 81; i++)
+            {
+                spriteBatch.Draw(getDustTexture(i), getDustHolder(i), Color.White);
+            }
+        }
+
 
     }
 }

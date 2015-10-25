@@ -15,6 +15,7 @@ namespace MiniMinecraft
     class Player : Microsoft.Xna.Framework.Game
     {
         Texture2D playerTexture;
+        bool alreadyJumped;
 
         public Texture2D PlayerTexture
         {
@@ -28,9 +29,8 @@ namespace MiniMinecraft
             get { return playerHolder; }
             set { playerHolder = value; }
         }
-        SpriteBatch spriteBatch;
 
-        public Player () {}
+        public Player() { alreadyJumped = false; }
 
         public virtual void PlayerSetTexture(Texture2D texture) {
             this.playerTexture = texture;
@@ -77,13 +77,42 @@ namespace MiniMinecraft
             }
         }
 
-        public virtual void PlayerJumpStraight()
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
-            Vector2 Velocity;
-            Velocity.X = 5f;
-            Velocity.Y = 5f;
+            spriteBatch.Draw(playerGetTexture(), playerGetRectangle(), Color.White);
+        }
 
-            playerHolder.Y -= (int) Velocity.Y;
+        public virtual void PlayerJump()
+        {
+            int velocityUp = -9;
+            int velocityDown = 3;
+            alreadyJumped = true;
+
+            this.playerHolder.Y += velocityUp;
+            
+                while (this.playerHolder.Y < 338)
+                {
+                    this.playerHolder.Y += velocityDown;
+                }
+        }
+
+        public void Update(GameTime gameTime)
+        {
+
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                MoveLeft();
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.D))
+            {
+                MoveRight();
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
+                if(this.playerHolder.Y == 338)
+                    PlayerJump();
+                alreadyJumped = false;
+            }
         }
 
     }

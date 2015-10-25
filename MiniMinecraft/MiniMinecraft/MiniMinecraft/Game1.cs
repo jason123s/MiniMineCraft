@@ -26,7 +26,6 @@ namespace MiniMinecraft
         Dust dust;
         Texture2D dustTexture;
         Rectangle dustHolder;
-        Vector2 position;
         int dustWidth = 30, dustHeight = 30;
 
         //screen values
@@ -68,7 +67,7 @@ namespace MiniMinecraft
             /*Load content for player*/
             player = new Player();
             player.PlayerSetTexture(Content.Load<Texture2D>("Player"));
-            player.PlayerSetRectangle(new Rectangle(10, 350, 30, 50));
+            player.PlayerSetRectangle(new Rectangle(770, 338, 30, 50));
 
             //Load content for Dust
             dust = new Dust();
@@ -101,7 +100,10 @@ namespace MiniMinecraft
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
-        {
+        {   
+            //show mouse on the Game Screen;
+            IsMouseVisible = true;
+
             // Allows the game to exit
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
@@ -114,7 +116,11 @@ namespace MiniMinecraft
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
-                player.MoveRight(screenWidth);
+                player.MoveRight();
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
+                player.PlayerJumpStraight();
             }
 
             base.Update(gameTime);
@@ -135,7 +141,10 @@ namespace MiniMinecraft
             {
                 spriteBatch.Draw(dust.getDustTexture(i), dust.getDustHolder(i), Color.White);
             }
-            
+
+            spriteBatch.Draw(dust.getDustTexture(10), new Rectangle(100,130,30,30), Color.White);
+            spriteBatch.Draw(dust.getDustTexture(10), new Rectangle(130, 130, 30, 30), Color.White);
+
             spriteBatch.End();
 
             base.Draw(gameTime);

@@ -13,9 +13,21 @@ using Microsoft.Xna.Framework.Media;
 namespace MiniMinecraft
 {
     class Player : Microsoft.Xna.Framework.Game
-    {   
+    {
         Texture2D playerTexture;
+
+        public Texture2D PlayerTexture
+        {
+            get { return playerTexture; }
+            set { playerTexture = value; }
+        }
+
         Rectangle playerHolder;
+        public Rectangle PlayerHolder
+        {
+            get { return playerHolder; }
+            set { playerHolder = value; }
+        }
         SpriteBatch spriteBatch;
 
         public Player () {}
@@ -39,6 +51,7 @@ namespace MiniMinecraft
             return this.playerHolder;
         }
 
+        //Move the player to the left position
         public virtual void MoveLeft()
         {
             if (this.playerHolder.X >= 0)
@@ -51,16 +64,26 @@ namespace MiniMinecraft
             }
         }
 
-        public virtual void MoveRight(int screenWidth)
+        //Move the player to the right position
+        public virtual void MoveRight()
         {
-            if ( (this.playerHolder.X + this.playerTexture.Width) >= screenWidth /2 )
+            if ( this.playerHolder.X + 30 <= 800)
             {
                 this.playerHolder.X += 5;
             } 
-            else if ( (this.playerHolder.X + this.playerTexture.Width) <= screenWidth)
+            else
             {
-                this.playerHolder.X = ( screenWidth /2 - this.playerTexture.Width);
+                this.playerHolder.X = (800 - 30);
             }
+        }
+
+        public virtual void PlayerJumpStraight()
+        {
+            Vector2 Velocity;
+            Velocity.X = 5f;
+            Velocity.Y = 5f;
+
+            playerHolder.Y -= (int) Velocity.Y;
         }
 
     }

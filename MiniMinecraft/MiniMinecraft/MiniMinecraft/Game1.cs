@@ -24,6 +24,9 @@ namespace MiniMinecraft
 
         //Initialize the zombie object
         Zombie zombie;
+
+        //Initialize the cloud object
+        Cloud cloud;
         
         //Initialize the Dust Object and its values
         Dust dust;
@@ -77,6 +80,10 @@ namespace MiniMinecraft
             //Load content for Zombie
             zombie = new Zombie(Content.Load<Texture2D>("Zombie"));
             zombie.makeZombieCrew();
+
+            //Load Content for Cloud
+            cloud = new Cloud(Content.Load<Texture2D>("Cloud"));
+            cloud.setCloudPosition();
 
             //Load content for Dust
             dust = new Dust();
@@ -137,9 +144,10 @@ namespace MiniMinecraft
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            player.Draw(spriteBatch);
-            dust.Draw(spriteBatch);
-            zombie.Draw(spriteBatch);
+                player.Draw(spriteBatch);
+                dust.Draw(spriteBatch);
+                zombie.Draw(spriteBatch);
+                cloud.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);

@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace MiniMinecraft
 {
-    class Player : Game1
+    class Player : Microsoft.Xna.Framework.Game
     {   
         Texture2D playerTexture;
         Rectangle playerHolder;
@@ -37,6 +37,30 @@ namespace MiniMinecraft
         public virtual Rectangle playerGetRectangle()
         {
             return this.playerHolder;
+        }
+
+        public virtual void MoveLeft()
+        {
+            if (this.playerHolder.X >= 0)
+            {
+                this.playerHolder.X -= 5;
+            }
+            else if(this.playerHolder.X < 0)
+            {
+                this.playerHolder.X = 0;
+            }
+        }
+
+        public virtual void MoveRight(int screenWidth)
+        {
+            if ( (this.playerHolder.X + this.playerTexture.Width) >= screenWidth /2 )
+            {
+                this.playerHolder.X += 5;
+            } 
+            else if ( (this.playerHolder.X + this.playerTexture.Width) <= screenWidth)
+            {
+                this.playerHolder.X = ( screenWidth /2 - this.playerTexture.Width);
+            }
         }
 
     }

@@ -19,9 +19,15 @@ namespace MiniMinecraft
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        //Inititalize the player object
+        //Initialize the player object
         Player player;
-       
+        
+        //Initialize the Dust Object and its values
+        Dust dust;
+        Texture2D dustTexture;
+        Rectangle dustHolder;
+        Vector2 position;
+        int dustWidth = 30, dustHeight = 30;
 
         //screen values
         int screenHeight, screenWidth;
@@ -62,8 +68,22 @@ namespace MiniMinecraft
             /*Load content for player*/
             player = new Player();
             player.PlayerSetTexture(Content.Load<Texture2D>("Player"));
-            player.PlayerSetRectangle(new Rectangle(10, 100, 30, 50));
+            player.PlayerSetRectangle(new Rectangle(10, 350, 30, 50));
 
+            //Load content for Dust
+            dust = new Dust();
+            dust.setSize(3 * screenWidth / 25);
+
+            for (int i = 0; i < 3; i++)
+            {
+                dustTexture = Content.Load<Texture2D>("dust");
+                for (int j = 0; j < 27; j++)
+                {   
+                    dustHolder = new Rectangle((j * dustWidth), screenHeight - ((i+1) * dustHeight), dustWidth, dustHeight);
+                    dust.InitDustStruct((i * 27 + j), dustTexture, dustHolder);
+                }
+            }
+            
         }
 
         /// <summary>
@@ -88,6 +108,15 @@ namespace MiniMinecraft
 
             // TODO: Add your update logic here
 
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                player.MoveLeft();
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.D))
+            {
+                player.MoveRight(screenWidth);
+            }
+
             base.Update(gameTime);
         }
 
@@ -97,11 +126,16 @@ namespace MiniMinecraft
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.White);
+            GraphicsDevice.Clear(Color.SkyBlue);
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             spriteBatch.Draw(player.playerGetTexture(), player.playerGetRectangle(), Color.White);
+            for (int i = 0; i < 81; i++)
+            {
+                spriteBatch.Draw(dust.getDustTexture(i), dust.getDustHolder(i), Color.White);
+            }
+            
             spriteBatch.End();
 
             base.Draw(gameTime);

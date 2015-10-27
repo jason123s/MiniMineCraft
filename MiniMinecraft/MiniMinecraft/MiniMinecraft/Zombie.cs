@@ -105,6 +105,10 @@ namespace MiniMinecraft
                 {
                     crew[i].UpdateZombiePosition(rand.Next(-4, -1));
                 }
+                else if (crew[i].ZombieHolder.X == 0 || crew[i].ZombieHolder.X == 800 || crew[i].ZombieHolder.X == _playerPostion && crew[i].ZMind.Equals(ZombieMind.CRAZY))
+                {
+                    crew[i].UpdateZombiePosition((int)rand.Next(-4,5));
+                }
                 else if (crew[i].ZMind.Equals(ZombieMind.CRAZY))
                 {
                     int velocity = rand.Next(-4, 4);

@@ -89,6 +89,7 @@ namespace MiniMinecraft
 
         public virtual void GetPlayerPosition(int Xposition)
         {
+            //update position for the zombie to come
             this._playerPostion = Xposition; 
         }
 
@@ -107,7 +108,7 @@ namespace MiniMinecraft
                 }
                 else if (crew[i].ZombieHolder.X == 0 || crew[i].ZombieHolder.X == 800 || crew[i].ZombieHolder.X == _playerPostion && crew[i].ZMind.Equals(ZombieMind.CRAZY))
                 {
-                    crew[i].UpdateZombiePosition((int)rand.Next(-4,5));
+                    crew[i].UpdateZombiePosition((int)rand.Next(0,5));
                 }
                 else if (crew[i].ZMind.Equals(ZombieMind.CRAZY))
                 {
@@ -118,7 +119,7 @@ namespace MiniMinecraft
                     }
                     else if (crew[i].ZombieHolder.X < 0)
                     {
-                        //crew[i].ZombieHolder.X = 0;
+                        crew[i].UpdateZombiePosition((int)rand.Next(0, 5));
                     } 
                 }
                 else 
